@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row" *ngIf="field">
+    <h2>Edit {{ field.title }}</h2>
+
+    <div class="col-12">Field type: {{ field.type }}</div>
+
+    <div class="col-12">
+      Display in tasks:
+      <input
+        type="checkbox"
+        [(ngModel)]="field.displayInTasks"
+        (ngModelChange)="setFieldChanges()"
+      />
+    </div>
+
+    <div class="col-12">
+      Required field:
+      <input type="checkbox" [(ngModel)]="field.required" (ngModelChange)="setFieldChanges()" />
+    </div>
+
+    <div class="col-12">
+      Label: <input type="text" [(ngModel)]="field.title" (ngModelChange)="setFieldChanges()" />
+    </div>
+
+    <div class="col-12">
+      Value:
+      <input
+        kenmoreInput
+        type="text"
+        [(ngModel)]="field.value"
+        (ngModelChange)="setFieldChanges()"
+      />
+    </div>
+
+    <div class="col-12" *ngIf="field.list">List of values: {{ field.list | json }}</div>
+
+    <div class="col-12">
+      <button kenmoreButton (click)="onClickManageTranslations()">manage translations</button>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    {{ field | json }}
+  </div>
+
+  <div class="mt-5">
+    <button (click)="discard.emit()">discard</button>
+    <button (click)="save.emit()">save</button>
+  </div>
+</div>

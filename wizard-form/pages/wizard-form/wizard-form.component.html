@@ -1,0 +1,121 @@
+<div class="container">
+  <div class="row" *ngIf="!isEdit">
+    <div class="col-6">
+      <ng-container *ngIf="!createView">
+        <div class="dd-row dd-row_all-unused-fields">
+          <div
+            *ngFor="let field of sidebarData"
+            class="dd-column dd-column_drag"
+            draggable="true"
+            (dragend)="onDragEndColumn($event)"
+            (dragstart)="onDragStartColumn($event, field)"
+          >
+            {{ field.title }}
+          </div>
+
+          <div class="fa-border mt-5">
+            <p>Don't see what you need?</p>
+            <button kenmoreButton (click)="changeView()">Create a new field</button>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="createView">
+        <div class="dd-row">
+          Create new
+          <button kenmoreButton [size]="'small'" (click)="changeView()">Back</button>
+          <div
+            class="col-12 dd-type mt-3"
+            *ngFor="let type of fieldTypeE | keyvalue"
+            (click)="openCreateSidebar(type.value)"
+          >
+            {{ type.value }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="col-6">
+      <div
+        *ngIf="!formData.length"
+        #rowDrop
+        class="dd-row dd-row_drop"
+        [ngClass]="{ visible: isDraggingColumn || isDraggingRow }"
+        (dragover)="onDragOverRow($event)"
+        (dragleave)="onDragLeaveRow($event)"
+        (drop)="onDropRow($event, 0)"
+      ></div>
+
+      <ng-container *ngFor="let row of formData; let index = index">
+        <div
+          *ngIf="index === 0"
+          #rowDrop
+          class="dd-row dd-row_drop"
+          [ngClass]="{ visible: isDraggingColumn || isDraggingRow }"
+          (dragover)="onDragOverRow($event)"
+          (dragleave)="onDragLeaveRow($event)"
+          (drop)="onDropRow($event, index)"
+        ></div>
+
+        <div
+          class="dd-row dd-row_drag d-flex align-items-stretch"
+          draggable="true"
+          (dragend)="onDragEndRow($event)"
+          (dragstart)="onDragStartRow($event, row)"
+        >
+          <ng-container *ngFor="let field of row; let index = index">
+            <div
+              *ngIf="index === 0"
+              #columnDrop
+              class="dd-column dd-column_drop"
+              [ngClass]="{ visible: isDraggingColumn }"
+              (dragover)="onDragOverColumn($event)"
+              (dragleave)="onDragLeaveColumn($event)"
+              (drop)="onDropColumn($event, row, index)"
+            ></div>
+
+            <div
+              class="dd-column dd-column_drag d-flex align-items-center justify-content-between"
+              draggable="true"
+              (dragend)="onDragEndColumn($event)"
+              (dragstart)="onDragStartColumn($event, field)"
+            >
+              <kenmore-wizard-field [field]="field" [isEdit]="false"></kenmore-wizard-field>
+
+              <div class="dd-column_drag__edit" (click)="onDragEditColumn(field)"></div>
+
+              <div class="dd-column_drag__remove" (click)="onDragRemoveColumn(field)"></div>
+            </div>
+
+            <div
+              *ngIf="index >= 0"
+              #columnDrop
+              class="dd-column dd-column_drop"
+              [ngClass]="{ visible: isDraggingColumn }"
+              (dragover)="onDragOverColumn($event)"
+              (dragleave)="onDragLeaveColumn($event)"
+              (drop)="onDropColumn($event, row, index)"
+            ></div>
+          </ng-container>
+        </div>
+
+        <div
+          *ngIf="index >= 0"
+          #rowDrop
+          class="dd-row dd-row_drop"
+          [ngClass]="{ visible: isDraggingColumn || isDraggingRow }"
+          (dragover)="onDragOverRow($event)"
+          (dragleave)="onDragLeaveRow($event)"
+          (drop)="onDropRow($event, index + 1)"
+        ></div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="isEdit">
+    <div class="col-6"></div>
+    <div class="col-6 text-center">
+      <kenmore-wizard-field [field]="editableField" [isEdit]="true"></kenmore-wizard-field>
+    </div>
+  </div>
+</div>

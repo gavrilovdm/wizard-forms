@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row" *ngIf="type && field">
+    <h2>Create new {{ type }}</h2>
+
+    <div class="col-12">Field type: {{ type }}</div>
+
+    <div class="col-12">
+      Display in tasks: <input type="checkbox" [value]="field.displayInTasks" />
+    </div>
+
+    <div class="col-12">Required field: <input type="checkbox" [value]="field.required" /></div>
+
+    <div class="col-12">Label: <input type="text" [value]="field.title" /></div>
+
+    <ng-container *ngIf="type === 'FILE'">
+      <div class="col-12">Accept images: <input type="checkbox" [value]="true" /></div>
+      <div class="col-12">Accept documents: <input type="checkbox" [value]="true" /></div>
+      <div class="col-12">Require issue date: <input type="checkbox" [value]="true" /></div>
+      <div class="col-12">Require exp. date: <input type="checkbox" [value]="true" /></div>
+    </ng-container>
+
+    <div class="col-12">
+      <button kenmoreButton (click)="onClickManageTranslations()">manage translations</button>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <button (click)="discard.emit()">discard</button>
+    <button (click)="save.emit()">save</button>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div
+  class="kenmore-sidebar"
+  [@slideInOut]="animationState"
+  (@slideInOut.start)="onAnimationStart($event)"
+>
+  <app-wizard-form-field-create
+    [type]="data.sidebarData"
+    (save)="close(true)"
+    (discard)="close(false)"
+  ></app-wizard-form-field-create>
+</div>

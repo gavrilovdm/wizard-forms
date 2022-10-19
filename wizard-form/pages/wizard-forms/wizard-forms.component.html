@@ -1,0 +1,8 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">wizard forms</div>
+    <div class="col-12" *ngFor="let form of data" (click)="openForm(form.id)">
+      Form #{{ form.id }}
+    </div>
+  </div>
+</div>

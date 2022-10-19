@@ -1,0 +1,117 @@
+.dd-row {
+  $row: &;
+
+  &:not(&_drop) {
+    padding: 1rem;
+
+    border: 3px solid purple;
+  }
+
+  &_drop {
+    height: 32px;
+    width: 100%;
+
+    visibility: hidden !important;
+
+    border: 3px dashed transparent;
+    background-color: rgba(240, 50, 50, 0.7);
+
+    &#{$row}_active {
+      border-color: rgba(120, 100, 100, 1);
+    }
+  }
+
+  &:not(.d-flex) {
+    .dd-column {
+      $column: '.dd-column';
+
+      &#{$column} + #{$column} {
+        margin-top: 32px;
+      }
+    }
+  }
+
+  &:is(.d-flex) {
+    .dd-column {
+      $column: '.dd-column';
+
+      &#{$column}:not(#{$column}_drop) + #{$column}:not(#{$column}_drop) {
+        margin-left: 32px;
+      }
+    }
+  }
+
+  .dd-column {
+    $column: '.dd-column';
+
+    &_drag {
+      width: 100%;
+      //padding: 0.75rem;
+
+      //border: 3px solid rgba(50, 50, 240, .7);
+
+      &__edit {
+        height: 24px;
+        width: 24px;
+
+        background-color: darkorchid;
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: darkblue;
+        }
+      }
+
+      &__remove {
+        height: 24px;
+        width: 24px;
+
+        background-color: darkred;
+
+        cursor: pointer;
+
+        &:hover {
+          background-color: indianred;
+        }
+      }
+    }
+
+    &_drop {
+      $drop: '.dd-column_drop';
+
+      width: 32px;
+      flex-shrink: 0;
+
+      visibility: hidden !important;
+
+      border: 3px dashed transparent;
+      background-color: rgba(50, 240, 50, 0.7);
+
+      &#{$column}_active {
+        border-color: rgba(100, 120, 100, 1);
+      }
+    }
+  }
+
+  .dd-type {
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      -webkit-box-shadow: 0 3px 8px 0 rgba(34, 60, 80, 0.2);
+      -moz-box-shadow: 0 3px 8px 0 rgba(34, 60, 80, 0.2);
+      box-shadow: 0 3px 8px 0 rgba(34, 60, 80, 0.2);
+    }
+  }
+}
+
+.hidden {
+  visibility: hidden !important;
+}
+
+.visible {
+  visibility: visible !important;
+}
